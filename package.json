@@ -1,0 +1,17 @@
+{
+  "name": "synthetic-monitor",
+  "version": "1.0.0",
+  "description": "simple synthetic moniter using prom-client to create custom metrics.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "monitor",
+    "synthetic",
+    "prometheus",
+    "prom-client"
+  ],
+  "author": "",
+  "license": "ISC"
+}
