@@ -5,17 +5,6 @@ const Health = require('./services/health');
 // Create an express app
 const app = express();
 
-// Define a route that returns a JSON response
-app.get('/check', async (req, res) => {
-    try {
-        //const health = new Health();
-        Health.check();
-        res.json({ message: 'health check started' });
-    } catch (error) {
-        res.status(500).json({ error: 'Internal server error' });
-    }
-});
-
 // Expose the Prometheus metrics endpoint
 app.get('/metrics', async (req, res) => {
     try {
@@ -27,10 +16,8 @@ app.get('/metrics', async (req, res) => {
     }
 });
 
-// expose a health check endpoint
-app.get('/health', (req, res) => {
-    res.json({ status: 'UP' });
-});
+Health.check();
+console.log('health check started');
 
 // Start the express app
 app.listen(3001, () => {
