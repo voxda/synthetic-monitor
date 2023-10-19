@@ -1,0 +1,16 @@
+{
+    "urls": [
+        {
+            "url": "https://example.com" 
+        },
+        {
+            "url": "https://example.net"
+        },
+        {
+            "url": "https:/example.org"
+        },
+        {
+            "url": "https://example.invalid"
+        }
+    ]
+}
