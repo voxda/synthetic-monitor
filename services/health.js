@@ -15,14 +15,36 @@ class Health {
         prometheus.collectDefaultMetrics({ register: new prometheus.Registry(), timeout: 5000 });
         prometheus.register.setDefaultLabels({app: 'synthetic-monitor'});
 
-        this.services = require('../resources/endpoints.js');
+        this.endpoints = require('../resources/endpoints.json');
 
-        this.EndPointGauge = new prometheus.Gauge({
+        this.urlGauge = new prometheus.Gauge({
             name: 'up_down',
-            help: 'Shows if an endpoint is up or down',
-            labelNames: ['name', 'type', 'environment', 'region']
+            help: 'Shows if a url is up or down',
+            labelNames: ['name', 'url']
         })
     }
 
+    check() {
+        setInterval( () => {
+            this.endpoints.urls.forEach(url => {
+                this.checkUrl(url);
+            })
+        }, 30000 );
 
+        return true
+    }
+
+    checkUrl(url) {
+        axios.get(url.url)
+        .then(response => {
+            console.log(`+++ url ${url.url} is up`);
+            this.urlGauge.labels("example", url.url).set(1);
+        })
+        .catch(error => {
+            console.log(`--- url ${url.url} is down`);
+            this.urlGauge.labels("example", url.url).set(0)
+        })
+    }
 }
+
+module.exports = new Health();
